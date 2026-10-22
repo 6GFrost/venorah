@@ -45,4 +45,155 @@ nav a:hover{opacity:1;text-decoration:underline;text-underline-offset:6px}
 .hero{position:relative;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:2rem;min-height:78vh;padding:2rem 0 4rem}
 h1{font-size:clamp(2.6rem,6.5vw,5rem);line-height:1.02;font-weight:500;letter-spacing:-.025em;margin:0 0 1.25rem}
 .hero p{max-width:34ch;margin:0 0 2rem}
-.btn{display:inline-block;background:var(--violet);col
+.btn{display:inline-block;background:var(--violet);color:#fff;border:0;border-radius:999px;padding:.9rem 1.8rem;font-size:1rem;font-weight:600;text-decoration:none;cursor:pointer;transition:transform .2s,box-shadow .2s}
+@media (prefers-color-scheme:dark){.btn{color:#1F1519}}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px -8px var(--violet)}
+.stage{position:relative;aspect-ratio:1;display:grid;place-items:center}
+.orb{width:78%;aspect-ratio:1;background:radial-gradient(circle at 32% 28%,#fff8 0,transparent 32%),radial-gradient(circle at 60% 65%,var(--orb-b),transparent 70%),linear-gradient(145deg,var(--orb-a),var(--nude));
+  border-radius:58% 42% 55% 45%/48% 56% 44% 52%;box-shadow:0 40px 80px -30px var(--orb-b),inset 0 -14px 40px #0002;
+  animation:morph 14s ease-in-out infinite;transition:background .6s,box-shadow .6s;will-change:transform}
+@keyframes morph{50%{border-radius:44% 56% 42% 58%/58% 44% 56% 42%}}
+.stage span{position:absolute;bottom:4%;font-family:"Bricolage Grotesque",sans-serif;font-size:.9rem;opacity:.7}
+
+/* sections */
+section{padding:4.5rem 0;border-top:1px solid var(--line)}
+h2{font-size:clamp(1.9rem,4vw,2.9rem);line-height:1.1;font-weight:500;letter-spacing:-.02em;margin:0 0 1rem;max-width:18ch}
+.lead{max-width:52ch}
+
+/* ritual finder */
+.tabs{display:flex;flex-wrap:wrap;gap:.6rem;margin:1.5rem 0}
+.tabs button{border:1.5px solid var(--line);background:transparent;color:inherit;border-radius:999px;padding:.6rem 1.3rem;font-size:1rem;cursor:pointer;transition:background .2s,border-color .2s}
+.tabs button:hover{border-color:var(--violet)}
+.tabs button[aria-selected="true"]{background:var(--violet);border-color:var(--violet);color:#fff}
+@media (prefers-color-scheme:dark){.tabs button[aria-selected="true"]{color:#1F1519}}
+.pick{display:grid;grid-template-columns:1fr 1fr;gap:2rem;background:var(--card);border:1px solid var(--line);border-radius:28px;padding:2rem}
+.pick h3{font-size:1.8rem;font-weight:500;margin:0 0 .5rem}
+.price{font-family:"Bricolage Grotesque",sans-serif;font-size:1.4rem;font-weight:600;color:var(--violet);margin:.5rem 0 1.25rem}
+.bottle{border-radius:120px 120px 24px 24px;min-height:220px;background:linear-gradient(160deg,var(--orb-a),var(--nude) 55%,var(--orb-b));box-shadow:inset 0 0 0 1px #fff4,0 24px 50px -24px var(--orb-b);transition:background .6s}
+
+/* story */
+.story{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+.story p{margin:0 0 1.1rem}
+
+/* signup */
+form{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.5rem}
+input{flex:1 1 240px;border:1.5px solid var(--line);background:var(--card);color:inherit;border-radius:999px;padding:.9rem 1.3rem;font-size:1rem}
+#msg{min-height:1.6em;margin-top:.9rem}
+footer{padding:2.5rem 0;border-top:1px solid var(--line);font-size:.95rem;opacity:.75}
+
+@media (max-width:760px){
+  .hero,.pick,.story{grid-template-columns:1fr}
+  .hero{min-height:0}
+  .stage{max-width:340px;margin:0 auto}
+  nav{gap:1rem}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+  <header>
+    <a class="brand" href="#top">VENORAH</a>
+    <nav aria-label="Main">
+      <a href="#ritual">Shop</a>
+      <a href="#story">Our story</a>
+      <a href="#join">Join</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <div class="hero">
+      <div>
+        <h1>Skincare that knows who you’re becoming.</h1>
+        <p>Made with care for all women and girls, with Black women at the centre. Affordable, and never ordinary.</p>
+        <a class="btn" href="#ritual">Find your ritual</a>
+      </div>
+      <div class="stage" id="stage" aria-hidden="true">
+        <div class="orb" id="orb"></div>
+        <span>Move your cursor</span>
+      </div>
+    </div>
+
+    <section id="ritual">
+      <h2>What does your skin want today?</h2>
+      <p class="lead">Pick one. We’ll show you where to start.</p>
+      <div class="tabs" role="tablist" aria-label="Choose a goal">
+        <button role="tab" aria-selected="true" data-i="0">Cleanse</button>
+        <button role="tab" aria-selected="false" data-i="1">Glow</button>
+        <button role="tab" aria-selected="false" data-i="2">Soften</button>
+      </div>
+      <div class="pick" role="tabpanel" aria-live="polite">
+        <div>
+          <h3 id="pName"></h3>
+          <p id="pText"></p>
+          <div class="price" id="pPrice"></div>
+          <a class="btn" href="#join">Tell me when it’s ready</a>
+        </div>
+        <div class="bottle" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <section id="story" class="story">
+      <h2>My name is on the bottle.</h2>
+      <div>
+        <p>VENORAH is my name, so every product carries a promise I have to keep. I’m building the skincare I wanted to find: gentle, beautiful, and made with Black women in mind.</p>
+        <p>It’s for every woman and girl who wants her routine to feel like her own. Natural ingredients, fair prices, and no pretending.</p>
+      </div>
+    </section>
+
+    <section id="join">
+      <h2>Be first through the door.</h2>
+      <p class="lead">Join the list for launch news and early offers.</p>
+      <form id="form">
+        <label for="email" hidden>Email address</label>
+        <input id="email" type="email" placeholder="you@email.com" required>
+        <button class="btn" type="submit">Join the list</button>
+      </form>
+      <div id="msg" role="status"></div>
+    </section>
+  </main>
+
+  <footer>© 2026 VENORAH. Draft preview: products and prices are placeholders.</footer>
+</div>
+
+<!-- STEP 3 for you: move this into script.js and use: <script src="script.js"></script> -->
+<script>
+const items=[
+  {n:"Velvet Cleanser",t:"A soft daily wash that cleans without leaving skin tight.",p:"R189",a:"#E3B9A0",b:"#B58CF0"},
+  {n:"Glow Serum",t:"A lightweight serum for an even, radiant look.",p:"R329",a:"#D9A98C",b:"#8E5FD0"},
+  {n:"Cocoa Body Butter",t:"Rich, comforting moisture for the whole body.",p:"R249",a:"#B98466",b:"#C9A6FF"}
+];
+const root=document.documentElement,
+      $=id=>document.getElementById(id),
+      tabs=[...document.querySelectorAll(".tabs button")];
+
+function show(i){
+  const x=items[i];
+  $("pName").textContent=x.n; $("pText").textContent=x.t; $("pPrice").textContent=x.p;
+  root.style.setProperty("--orb-a",x.a); root.style.setProperty("--orb-b",x.b);
+  tabs.forEach((b,j)=>b.setAttribute("aria-selected",j===i));
+}
+tabs.forEach((b,i)=>b.addEventListener("click",()=>show(i)));
+show(0);
+
+// orb follows the cursor a little
+const stage=$("stage"),orb=$("orb");
+if(!matchMedia("(prefers-reduced-motion: reduce)").matches){
+  window.addEventListener("pointermove",e=>{
+    const r=stage.getBoundingClientRect(),
+          dx=(e.clientX-(r.left+r.width/2))/innerWidth,
+          dy=(e.clientY-(r.top+r.height/2))/innerHeight;
+    orb.style.transform=`translate(${dx*40}px,${dy*40}px)`;
+  });
+}
+
+// demo signup: nothing is saved yet
+$("form").addEventListener("submit",e=>{
+  e.preventDefault();
+  $("msg").textContent="Thank you, you’re on the list. (Demo only: nothing is saved yet.)";
+  e.target.reset();
+});
+</script>
+</body>
+</html>
